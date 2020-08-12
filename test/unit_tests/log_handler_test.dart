@@ -3,7 +3,7 @@ import 'package:temperature_tracker/models/log.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
 import 'package:temperature_tracker/utilities/log_handler.dart';
 
-import 'mock_data_provider.dart';
+import '../data/mock_data_provider.dart';
 
 void main() {
   setupDependencies();
@@ -30,7 +30,7 @@ void main() {
 
   test('Given a new log, it should be added into the list', () async {
     Log newLog = Log(40.0);
-    newLog.dateTime = new DateTime(2020, 10, 5, 10, 0, 1, 0, 0);
+    newLog.dateTime = new DateTime(2020, 10, 1, 10, 4, 1, 0, 0);
     logHandler.addLog(newLog);
 
     expect(logHandler.logList.items.first.temperature, equals(40.0));

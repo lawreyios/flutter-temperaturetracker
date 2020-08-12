@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:temperature_tracker/add_log.dart';
 import 'package:temperature_tracker/models/log.dart';
+import 'package:temperature_tracker/utilities/constants.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
 import 'package:temperature_tracker/utilities/log_handler.dart';
 import 'package:temperature_tracker/utilities/temperature_handler.dart';
@@ -22,8 +23,6 @@ class _HomePageState extends State<HomePage> {
     Log newLog = await Navigator.of(context).push(CupertinoPageRoute(
         fullscreenDialog: true, builder: (context) => AddLogPage()));
 
-    print(logHandler.getHighestTemperature().toStringAsFixed(1));
-
     setState(() {
       logHandler.addLog(newLog);
     });
@@ -39,11 +38,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(logHandler.getHighestTemperature() == 0.0
-            ? 'Are you feeling well today?'
+            ? HOME_PAGE_TITLE
             : 'You have a ${TemperatureHandler(logHandler.getHighestTemperature()).temperatureGrade()}.'),
       ),
       body: Center(
         child: ListView.builder(
+          key: Key(LOG_LIST_KEY),
           itemCount: logHandler.logList.items.length,
           itemBuilder: (context, index) {
             return Dismissible(
@@ -75,9 +75,17 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addLog,
-        tooltip: 'Add Log',
         child: Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class HomePageWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
     );
   }
 }

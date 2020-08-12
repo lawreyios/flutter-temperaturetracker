@@ -72,3 +72,12 @@ class _AddLogPageState extends State<AddLogPage> {
     Navigator.of(context).pop(newLog);
   }
 }
+
+class AddLogPageWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AddLogPage(),
+    );
+  }
+}
