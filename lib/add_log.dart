@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temperature_tracker/models/log.dart';
+import 'package:temperature_tracker/utilities/constants.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
 import 'package:temperature_tracker/utilities/log_handler.dart';
 
@@ -17,7 +18,7 @@ class _AddLogPageState extends State<AddLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Temperature Log"),
+        title: Text(ADD_LOG_PAGE_TITLE),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),

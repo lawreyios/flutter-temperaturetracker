@@ -38,6 +38,8 @@ void main() {
       (WidgetTester tester) async {
     LogList mockLogList = MockDataProvider().getMockLogList();
 
+    logHandler.logList.items.clear();
+
     mockLogList.items.forEach((log) {
       logHandler.addLog(log);
     });
@@ -48,6 +50,25 @@ void main() {
 
     final titleFinder = find.text("You have a Normal Temperature.");
     expect(titleFinder, findsOneWidget);
+  });
+
+  testWidgets('Given user swipe to remove a log, the log should be removed',
+      (WidgetTester tester) async {
+    LogList mockLogList = MockDataProvider().getMockLogList();
+
+    logHandler.logList.items.clear();
+
+    mockLogList.items.forEach((log) {
+      logHandler.addLog(log);
+    });
+
+    await tester.pumpWidget(HomePageWrapper());
+    await tester.drag(find.text("36.5°C"), Offset(500.0, 0.0));
+    await tester.pumpAndSettle();
+
+    expect(find.text('36.5°C'), findsNothing);
+
+    expect(find.text(LOG_DELETION_ALERT_TEXT), findsOneWidget);
   });
 }
 

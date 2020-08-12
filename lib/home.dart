@@ -53,8 +53,8 @@ class _HomePageState extends State<HomePage> {
                   logHandler.removeLog(index);
                 });
 
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text("Log Deleted")));
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text(LOG_DELETION_ALERT_TEXT)));
               },
               background: Container(color: Colors.red),
               child: ListTile(

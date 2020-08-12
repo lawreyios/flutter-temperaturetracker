@@ -11,20 +11,14 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(AddLogPageWrapper());
 
-    WidgetPredicate widgetDoneButton = (Widget widget) =>
-        widget is IconButton && widget.icon == Icon(Icons.done);
+    final doneButton = find.byIcon(Icons.done);
+    expect(doneButton, findsOneWidget);
 
-    expect(find.byWidgetPredicate(widgetDoneButton), findsOneWidget);
+    final subtractButton = find.byIcon(Icons.remove);
+    expect(subtractButton, findsOneWidget);
 
-    WidgetPredicate widgetSubtractButton = (Widget widget) =>
-        widget is IconButton && widget.icon == Icon(Icons.remove);
-
-    expect(find.byWidgetPredicate(widgetSubtractButton), findsOneWidget);
-
-    WidgetPredicate widgetAddButton = (Widget widget) =>
-        widget is IconButton && widget.icon == Icon(Icons.add);
-
-    expect(find.byWidgetPredicate(widgetAddButton), findsOneWidget);
+    final addButton = find.byIcon(Icons.add);
+    expect(addButton, findsOneWidget);
 
     final titleFinder = find.text(ADD_LOG_PAGE_TITLE);
     expect(titleFinder, findsOneWidget);
@@ -40,14 +34,18 @@ void main() {
 
     final subtractButton = find.byIcon(Icons.remove);
     await tester.tap(subtractButton);
+    await tester.pump(Duration.zero);
 
     var temperatureFinder = find.text("36.4");
+    tester.ensureVisible(temperatureFinder);
     expect(temperatureFinder, findsOneWidget);
 
     final addButton = find.byIcon(Icons.add);
     await tester.tap(addButton);
+    await tester.tap(addButton);
+    await tester.pump(Duration.zero);
 
-    temperatureFinder = find.text("36.5");
+    temperatureFinder = find.text("36.6");
     expect(temperatureFinder, findsOneWidget);
   });
 }

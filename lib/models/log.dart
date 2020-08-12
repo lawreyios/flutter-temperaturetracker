@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:temperature_tracker/utilities/constants.dart';
 
 class Log {
   final int id = (((DateTime.now()).millisecondsSinceEpoch) / 1000).round();
@@ -8,7 +9,7 @@ class Log {
   Log(this.temperature);
 
   String getDateTimeString() {
-    return DateFormat('hh:mm a').format(dateTime);
+    return DateFormat(DATE_FORMAT).format(dateTime);
   }
 
   String temperatureString() {
