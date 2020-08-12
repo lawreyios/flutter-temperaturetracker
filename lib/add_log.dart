@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:temperature_tracker/models/log.dart';
+import 'package:temperature_tracker/utilities/dependency_injector.dart';
+import 'package:temperature_tracker/utilities/log_handler.dart';
 
 class AddLogPage extends StatefulWidget {
   @override
@@ -7,7 +9,9 @@ class AddLogPage extends StatefulWidget {
 }
 
 class _AddLogPageState extends State<AddLogPage> {
-  double _initialTemperature = 36.5;
+  double _currentTemperature = 36.5;
+
+  LogHandler logHandler = getIt<LogHandler>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +36,25 @@ class _AddLogPageState extends State<AddLogPage> {
                 IconButton(
                   icon: Icon(Icons.remove, size: 25.0),
                   onPressed: () {
-                    updateTemperature(false);
+                    setState(() {
+                      _currentTemperature = logHandler.updateTemperature(
+                          false, _currentTemperature);
+                    });
                   },
                 ),
                 Spacer(),
                 Text(
-                  '${_initialTemperature.toStringAsFixed(1)}',
+                  '${_currentTemperature.toStringAsFixed(1)}',
                   style: TextStyle(fontSize: 100.0),
                 ),
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.add, size: 25.0),
                   onPressed: () {
-                    updateTemperature(true);
+                    setState(() {
+                      _currentTemperature = logHandler.updateTemperature(
+                          true, _currentTemperature);
+                    });
                   },
                 ),
                 Spacer(),
@@ -56,18 +66,8 @@ class _AddLogPageState extends State<AddLogPage> {
     );
   }
 
-  void updateTemperature(bool isIncrement) {
-    setState(() {
-      if (isIncrement) {
-        _initialTemperature += 0.1;
-      } else {
-        _initialTemperature -= 0.1;
-      }
-    });
-  }
-
   void addLog() async {
-    final Log newLog = Log(_initialTemperature);
+    final Log newLog = Log(_currentTemperature);
 
     Navigator.of(context).pop(newLog);
   }
