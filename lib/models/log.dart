@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class Log {
   final int id = (((DateTime.now()).millisecondsSinceEpoch) / 1000).round();
-  final DateTime dateTime = DateTime.now();
+  DateTime dateTime = DateTime.now();
   final double temperature;
 
   Log(this.temperature);
