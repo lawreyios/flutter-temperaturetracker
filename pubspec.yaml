@@ -14,6 +14,7 @@ dependencies:
   flutter_launcher_name: "^0.0.1"
   intl: ^0.16.1
   get_it: ^4.0.4
+  analyzer: ^0.40.0
 
 dev_dependencies:
   flutter_test:

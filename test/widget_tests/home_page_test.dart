@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:temperature_tracker/home.dart';
+import 'package:temperature_tracker/pages/home_page.dart';
 import 'package:temperature_tracker/models/log.dart';
 import 'package:temperature_tracker/utilities/constants.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
-import 'package:temperature_tracker/utilities/log_handler.dart';
-import 'package:temperature_tracker/utilities/temperature_handler.dart';
+import 'package:temperature_tracker/services/log_handler.dart';
+import 'package:temperature_tracker/services/temperature_handler.dart';
 import '../data/mock_data_provider.dart';
 
 void main() {
   setupDependencies();
 
-  LogHandler logHandler = getIt<LogHandler>();
+  final logHandler = getIt<LogHandler>();
 
   testWidgets(
       'Given user enters home page for the first time, there should not be any logs shown',
@@ -21,12 +21,12 @@ void main() {
     final logListKey = find.byKey(Key(LOG_LIST_KEY));
     expect(logListKey, findsOneWidget);
 
-    WidgetPredicate widgetAddLogButton =
+    final widgetAddLogButton =
         (Widget widget) => widget is FloatingActionButton;
 
     expect(find.byWidgetPredicate(widgetAddLogButton), findsOneWidget);
 
-    WidgetPredicate widgetAppBar = (Widget widget) => widget is AppBar;
+    final widgetAppBar = (Widget widget) => widget is AppBar;
 
     expect(find.byWidgetPredicate(widgetAppBar), findsOneWidget);
 
@@ -36,7 +36,7 @@ void main() {
 
   testWidgets('Given user has recorded some logs, there should logs shown',
       (WidgetTester tester) async {
-    LogList mockLogList = MockDataProvider().getMockLogList();
+    final mockLogList = MockDataProvider().getMockLogList();
 
     logHandler.logList.items.clear();
 
@@ -54,7 +54,7 @@ void main() {
 
   testWidgets('Given user swipe to remove a log, the log should be removed',
       (WidgetTester tester) async {
-    LogList mockLogList = MockDataProvider().getMockLogList();
+    final mockLogList = MockDataProvider().getMockLogList();
 
     logHandler.logList.items.clear();
 
@@ -63,7 +63,7 @@ void main() {
     });
 
     await tester.pumpWidget(HomePageWrapper());
-    await tester.drag(find.text("36.5°C"), Offset(500.0, 0.0));
+    await tester.drag(find.text("36.5°C"), const Offset(500.0, 0.0));
     await tester.pumpAndSettle();
 
     expect(find.text('36.5°C'), findsNothing);
@@ -73,7 +73,7 @@ void main() {
 }
 
 void _verifyAllLogDetails(LogList logList, WidgetTester tester) async {
-  for (var log in logList.items) {
+  for (final log in logList.items) {
     final temperatureReading = find.text("${log.temperatureString()}°C");
     final logTime = find.text("${log.getDateTimeString()}");
     await tester.ensureVisible(temperatureReading);
@@ -81,7 +81,7 @@ void _verifyAllLogDetails(LogList logList, WidgetTester tester) async {
     await tester.ensureVisible(logTime);
     expect(logTime, findsOneWidget);
 
-    TemperatureHandler handler = TemperatureHandler(log.temperature);
+    final handler = TemperatureHandler(log.temperature);
     expect(
         ((tester.firstWidget(find.text("${log.temperatureString()}°C")) as Text)
                 .style)

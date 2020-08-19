@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:temperature_tracker/models/log.dart';
 import 'package:temperature_tracker/utilities/constants.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
-import 'package:temperature_tracker/utilities/log_handler.dart';
+import 'package:temperature_tracker/services/log_handler.dart';
 
 class AddLogPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _AddLogPageState extends State<AddLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ADD_LOG_PAGE_TITLE),
+        title: const Text(ADD_LOG_PAGE_TITLE),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),
@@ -33,7 +33,7 @@ class _AddLogPageState extends State<AddLogPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Spacer(),
+                const Spacer(),
                 IconButton(
                   icon: Icon(Icons.remove, size: 25.0),
                   onPressed: () {
@@ -43,12 +43,12 @@ class _AddLogPageState extends State<AddLogPage> {
                     });
                   },
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   '${_currentTemperature.toStringAsFixed(1)}',
-                  style: TextStyle(fontSize: 100.0),
+                  style: const TextStyle(fontSize: 100.0),
                 ),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                   icon: Icon(Icons.add, size: 25.0),
                   onPressed: () {
@@ -58,7 +58,7 @@ class _AddLogPageState extends State<AddLogPage> {
                     });
                   },
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             )
           ],
@@ -67,7 +67,7 @@ class _AddLogPageState extends State<AddLogPage> {
     );
   }
 
-  void addLog() async {
+  Future<void> addLog() async {
     final Log newLog = Log(_currentTemperature);
 
     Navigator.of(context).pop(newLog);

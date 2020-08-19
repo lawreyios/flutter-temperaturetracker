@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:temperature_tracker/add_log.dart';
-import 'package:temperature_tracker/models/log.dart';
+import 'package:temperature_tracker/pages/add_log_page.dart';
 import 'package:temperature_tracker/utilities/constants.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
-import 'package:temperature_tracker/utilities/log_handler.dart';
-import 'package:temperature_tracker/utilities/temperature_handler.dart';
+import 'package:temperature_tracker/services/log_handler.dart';
+import 'package:temperature_tracker/services/temperature_handler.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  const HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -19,8 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   LogHandler logHandler = getIt<LogHandler>();
 
-  void _addLog() async {
-    Log newLog = await Navigator.of(context).push(CupertinoPageRoute(
+  Future<void> _addLog() async {
+    final newLog = await Navigator.of(context).push(CupertinoPageRoute(
         fullscreenDialog: true, builder: (context) => AddLogPage()));
 
     setState(() {
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Color getGradeColor(double temperature) {
-    TemperatureHandler handler = TemperatureHandler(temperature);
+    final handler = TemperatureHandler(temperature);
     return handler.temperatureColor();
   }
 
@@ -84,7 +83,7 @@ class _HomePageState extends State<HomePage> {
 class HomePageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }

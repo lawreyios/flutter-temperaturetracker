@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temperature_tracker/utilities/dependency_injector.dart';
-import 'home.dart';
+import 'pages/home_page.dart';
 
 void main() {
   setupDependencies();
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(
+      home: const HomePage(
         title: "Are you well today?",
       ),
     );

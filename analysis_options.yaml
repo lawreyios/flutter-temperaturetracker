@@ -1,0 +1,29 @@
+analyzer:
+  exclude: [build/**]
+  errors:
+    missing_return: error
+    dead_code: error
+    always_declare_return_types: error
+    avoid_web_libraries_in_flutter: error
+    missing_required_param: error
+
+linter:
+  rules:
+    - camel_case_types
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - await_only_futures
+    - empty_statements
+    - hash_and_equals
+    - avoid_annotating_with_dynamic
+    - avoid_unnecessary_containers
+    - file_names
+    - prefer_if_null_operators
+    - prefer_null_aware_operators
+    - unnecessary_this
+    - unnecessary_const
+    - unnecessary_new

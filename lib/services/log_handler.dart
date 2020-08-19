@@ -1,7 +1,7 @@
 import 'package:temperature_tracker/models/log.dart';
 
 class LogHandler {
-  LogList _list = LogList();
+  final _list = LogList();
 
   LogList get logList {
     _list.items.sort((a, b) => b.dateTime.compareTo(a.dateTime));
@@ -18,7 +18,7 @@ class LogHandler {
 
   double getHighestTemperature() {
     if (_list.items.isNotEmpty) {
-      List<dynamic> tempItems = _list.items;
+      final tempItems = _list.items;
       tempItems.sort((a, b) => b.temperature.compareTo(a.temperature));
       return tempItems.first.temperature;
     } else {
